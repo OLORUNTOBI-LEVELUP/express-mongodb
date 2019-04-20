@@ -30,6 +30,8 @@ app.use("/subject", subjectRouter);
 
 app.post("/teacher", async(req,res) => {
     try{
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+        
         const teacher = await teacherModel.create(req.body)
         return res.status(200).json({
             status: 'success',
@@ -100,10 +102,10 @@ app.delete("/teacher/:email", async(req,res) => {
     }
 })
 
-app.get("/teacher/:email", async(req, res) => {
+app.get("/teacher/:email", async function(req, res) {
     try {
 
-        req.body.password = await bcrypt.hash(req.body.password, 10);
+        
         const teacher = await teacherModel.findOne({ email: req.params.email });
 
         if(!teacher){

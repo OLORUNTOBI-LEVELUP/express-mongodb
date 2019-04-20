@@ -78,7 +78,6 @@ router.delete("/:name", async(req,res) => {
 router.get("/:name", async(req, res) => {
     try {
 
-        req.body.password = await bcrypt.hash(req.body.password, 10);
         const subject = await subjectModel.findOne({ name: req.params.name });
 
         if(!subject){
